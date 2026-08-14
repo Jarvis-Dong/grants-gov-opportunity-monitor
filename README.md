@@ -65,6 +65,10 @@ curl -X POST \
   -d '{"keyword":"artificial intelligence","statuses":["posted","forecasted"],"limit":25,"monitorId":"ai-grants"}'
 ```
 
+The generated API client's empty `{}` input is also safe: it uses the same
+bounded `artificial intelligence`, `posted` plus `forecasted`, 25-result query
+shown in the Store schema. Set a unique `monitorId` for every real alert.
+
 The Grants.gov `search2` response includes service metadata that the Actor does
 not persist or expose. It does not call the detail or attachment endpoints, so
 it avoids downloading long descriptions, contact records, or application

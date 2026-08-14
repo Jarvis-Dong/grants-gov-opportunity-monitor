@@ -177,6 +177,29 @@ class GrantsMonitorTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "different query"):
             asyncio.run(run_actor(actor, fetcher=fetcher))
 
+    def test_empty_api_input_uses_the_bounded_ai_query(self):
+        captured = {}
+
+        def fetcher(payload):
+            captured.update(payload)
+            return [], 0
+
+        actor = FakeActor()
+        actor.actor_input = {}
+        summary = asyncio.run(
+            run_actor(
+                actor,
+                fetcher=fetcher,
+                observed_at="2026-08-15T00:00:00Z",
+            )
+        )
+
+        self.assertEqual(captured["keyword"], "artificial intelligence")
+        self.assertEqual(captured["oppStatuses"], "posted|forecasted")
+        self.assertEqual(captured["rows"], 25)
+        self.assertEqual(summary["new"], 0)
+        self.assertEqual(actor.charges, [])
+
 
 if __name__ == "__main__":
     unittest.main()

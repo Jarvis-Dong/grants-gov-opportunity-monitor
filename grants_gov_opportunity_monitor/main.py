@@ -38,7 +38,9 @@ async def run_actor(
     if not isinstance(actor_input, dict):
         raise ValueError("Actor input must be an object")
     query = {
-        "keyword": validate_keyword(actor_input.get("keyword")),
+        "keyword": validate_keyword(
+            actor_input.get("keyword", "artificial intelligence")
+        ),
         "statuses": validate_statuses(actor_input.get("statuses", ["posted", "forecasted"])),
         "agencyCodes": validate_codes(actor_input.get("agencyCodes"), "agencyCodes"),
         "eligibilityCodes": validate_codes(
