@@ -1,0 +1,18 @@
+{
+  "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+  "actorSpecification": 1,
+  "name": "grants-gov-opportunity-monitor",
+  "title": "Grants.gov Opportunity Monitor",
+  "description": "Find and monitor factual U.S. federal grant opportunity summaries from the official no-key Grants.gov API.",
+  "version": "0.1",
+  "buildTag": "latest",
+  "readme": "../README.md",
+  "dockerContextDir": "..",
+  "minMemoryMbytes": 128,
+  "defaultMemoryMbytes": 128,
+  "maxMemoryMbytes": 256,
+  "input": "./input_schema.json",
+  "output": "./output_schema.json",
+  "storages": {"dataset": "./dataset_schema.json"},
+  "dockerfile": "../Dockerfile"
+}

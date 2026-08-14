@@ -1,0 +1,34 @@
+{
+  "errorcode": 0,
+  "msg": "Webservice Succeeds",
+  "token": "discard-this-source-metadata",
+  "data": {
+    "hitCount": 2,
+    "oppHits": [
+      {
+        "id": "363293",
+        "number": "PAS-JAKARTA-FY26-08",
+        "title": "American Innovation Hub: AI &amp; Digital Skills",
+        "agencyCode": "DOS-IDN",
+        "agency": "U.S. Mission to Indonesia",
+        "openDate": "07/23/2026",
+        "closeDate": "08/30/2026",
+        "oppStatus": "posted",
+        "docType": "synopsis",
+        "cfdaList": ["19.441"]
+      },
+      {
+        "id": "363107",
+        "number": "RFA-RM-28-010",
+        "title": "Bridge2AI Network for AI Health Science",
+        "agencyCode": "HHS-NIH11",
+        "agency": "National Institutes of Health",
+        "openDate": "07/08/2026",
+        "closeDate": "",
+        "oppStatus": "forecasted",
+        "docType": "forecast",
+        "cfdaList": ["93.310"]
+      }
+    ]
+  }
+}

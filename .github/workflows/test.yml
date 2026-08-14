@@ -1,0 +1,49 @@
+name: Test Grants.gov opportunity monitor
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Compile Python
+        run: python -m compileall -q grants_gov_opportunity_monitor
+      - name: Validate Apify schemas
+        run: npx --yes apify-cli validate-schema
+      - name: Smoke test the official Grants.gov API
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          python - <<'PY'
+          from grants_gov_opportunity_monitor.core import search_grants
+
+          rows, total = search_grants({
+              "keyword": "artificial intelligence",
+              "oppStatuses": "posted|forecasted",
+              "agencies": "",
+              "eligibilities": "",
+              "fundingCategories": "",
+              "rows": 1,
+              "startRecordNum": 0,
+              "sortBy": "openDate|desc",
+          })
+          if total < 1 or len(rows) != 1:
+              raise RuntimeError("official Grants.gov API returned no normalized result")
+          print(f"official Grants.gov API OK: {rows[0]['opportunityNumber']}")
+          PY

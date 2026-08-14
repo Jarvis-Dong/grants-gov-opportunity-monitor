@@ -1,0 +1,12 @@
+{
+  "$schema": "https://apify.com/schemas/v1/output.ide.json",
+  "actorOutputSchemaVersion": 1,
+  "title": "Grants.gov opportunity changes",
+  "properties": {
+    "results": {
+      "type": "string",
+      "title": "New and changed opportunities",
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
+    }
+  }
+}

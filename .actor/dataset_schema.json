@@ -1,0 +1,75 @@
+{
+  "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+  "actorSpecification": 1,
+  "fields": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": [
+      "opportunityId",
+      "opportunityNumber",
+      "title",
+      "agencyCode",
+      "agency",
+      "opportunityStatus",
+      "sourceUrl",
+      "observedAt",
+      "changeType",
+      "changes"
+    ],
+    "properties": {
+      "opportunityId": {"type": "string"},
+      "opportunityNumber": {"type": "string"},
+      "title": {"type": "string"},
+      "agencyCode": {"type": "string"},
+      "agency": {"type": "string"},
+      "openDate": {"type": ["string", "null"], "format": "date"},
+      "closeDate": {"type": ["string", "null"], "format": "date"},
+      "opportunityStatus": {"type": "string"},
+      "documentType": {"type": ["string", "null"]},
+      "cfdaNumbers": {"type": "array", "items": {"type": "string"}},
+      "sourceUrl": {"type": "string", "format": "uri"},
+      "observedAt": {"type": "string", "format": "date-time"},
+      "changeType": {"type": "string", "enum": ["new", "changed"]},
+      "changes": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["field", "previousValue", "currentValue"],
+          "properties": {
+            "field": {"type": "string"},
+            "previousValue": {},
+            "currentValue": {}
+          }
+        }
+      }
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Grant opportunity alerts",
+      "transformation": {
+        "fields": [
+          "changeType",
+          "opportunityNumber",
+          "title",
+          "agency",
+          "opportunityStatus",
+          "closeDate",
+          "sourceUrl"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "changeType": {"label": "Change", "format": "text"},
+          "opportunityNumber": {"label": "Opportunity", "format": "text"},
+          "title": {"label": "Title", "format": "text"},
+          "agency": {"label": "Agency", "format": "text"},
+          "opportunityStatus": {"label": "Status", "format": "text"},
+          "closeDate": {"label": "Closes", "format": "date"},
+          "sourceUrl": {"label": "Grants.gov", "format": "link"}
+        }
+      }
+    }
+  }
+}
