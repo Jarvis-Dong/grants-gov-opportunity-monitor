@@ -65,6 +65,18 @@ not persist or expose. It does not call the detail or attachment endpoints, so
 it avoids downloading long descriptions, contact records, or application
 files that are not needed for a change alert.
 
+## No-code automation
+
+Import the ready-made [n8n daily monitoring workflow](https://github.com/Jarvis-Dong/grants-gov-opportunity-monitor/blob/main/examples/n8n-grants-gov-monitor.json)
+and follow the [n8n and Make setup recipe](https://github.com/Jarvis-Dong/grants-gov-opportunity-monitor/blob/main/examples/README.md).
+The example uses a stable `monitorId` (`n8n-ai-grants`) and `limit: 10`. At the
+current published event prices, even ten changed rows cost at most
+`10 * $0.015 + $0.00005 = $0.15005` before tax or account-level charges. The
+workflow does not run the Actor until you manually execute or activate it with
+your own Apify token.
+Connect its final node to a Slack, email, database, or private webhook that you
+control. Do not put tokens or delivery credentials in the exported JSON.
+
 ## Pay-per-event setup
 
 Suggested launch prices are explicit and only successful result events are

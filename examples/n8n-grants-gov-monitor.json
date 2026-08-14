@@ -1,0 +1,144 @@
+{
+  "name": "Grants.gov Opportunity Monitor - daily alerts",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "# Grants.gov Opportunity Monitor\n\n1. Import this workflow and attach an n8n Header Auth credential to **Run Grants.gov Monitor**. Use header `Authorization` and value `Bearer YOUR_APIFY_API_TOKEN`; keep the token in n8n's credential store.\n2. The input below is a bounded, valid example: `artificial intelligence`, posted or forecasted opportunities, `limit: 10`, and stable `monitorId: n8n-ai-grants`. Keep that ID unchanged for this exact query.\n3. Test once to create the baseline. The first run can emit up to ten `new` rows; later runs emit only `new` or `changed` rows.\n4. Replace **Connect Slack, email, or database here** with the private destination you control.\n\nAt the current prices, the maximum result/start event charge for this template is `$0.15005` per successful run (`10 * $0.015 + $0.00005`), before tax or account-level charges. Empty output is a healthy no-change run. This export contains no token, cookie, webhook, or payment data. The template does not run the Actor until you manually execute or activate it with your own token.",
+        "height": 390,
+        "width": 520,
+        "color": 5
+      },
+      "id": "d8dfc8ea-45c1-4fb7-bb09-59e3f13022e2",
+      "name": "Setup notes",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -700,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 8 * * *"
+            }
+          ]
+        }
+      },
+      "id": "8dc46240-0ce7-4a86-bc26-00c968e8fc17",
+      "name": "Every morning",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -620,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/actors/ai-coding-radar~grants-gov-opportunity-monitor/run-sync-get-dataset-items?clean=1",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Accept",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"keyword\": \"artificial intelligence\",\n  \"statuses\": [\"posted\", \"forecasted\"],\n  \"agencyCodes\": [],\n  \"eligibilityCodes\": [],\n  \"fundingCategoryCodes\": [],\n  \"limit\": 10,\n  \"monitorId\": \"n8n-ai-grants\"\n}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "id": "71f699f5-84cb-4082-bf5f-4171a3cd4fd3",
+      "name": "Run Grants.gov Monitor",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -340,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const entries = $input.all();\nconst rows = entries.flatMap(({ json }) => {\n  if (Array.isArray(json)) return json;\n  if (json && Array.isArray(json.body)) return json.body;\n  if (json && Array.isArray(json.data)) return json.data;\n  if (json && Array.isArray(json.items)) return json.items;\n  return json && typeof json === 'object' ? [json] : [];\n});\nreturn rows\n  .filter(row => row && (row.changeType === 'new' || row.changeType === 'changed'))\n  .map(row => {\n    const prefix = row.changeType === 'changed' ? 'Grant update' : 'New grant';\n    const closing = row.closeDate || 'no close date published';\n    return {\n      json: {\n        ...row,\n        alertType: row.changeType === 'changed' ? 'grant_change' : 'grant_opportunity',\n        alertText: `${prefix}: ${row.title} (${row.opportunityNumber}) - ${row.agency}; closes ${closing}\\n${row.sourceUrl}`\n      }\n    };\n  });"
+      },
+      "id": "3e5fd4be-f97e-45ab-ab78-c77a613aacb8",
+      "name": "Format grant alerts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -60,
+        80
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "fb431eee-fbe3-41ae-9c9b-02678a17816e",
+      "name": "Connect Slack, email, or database here",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        260,
+        80
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every morning": {
+      "main": [
+        [
+          {
+            "node": "Run Grants.gov Monitor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Grants.gov Monitor": {
+      "main": [
+        [
+          {
+            "node": "Format grant alerts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format grant alerts": {
+      "main": [
+        [
+          {
+            "node": "Connect Slack, email, or database here",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Shanghai",
+    "saveManualExecutions": true
+  },
+  "versionId": "10edb8c9-50d2-46b4-a4f1-eedfc7c6ea38",
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}
