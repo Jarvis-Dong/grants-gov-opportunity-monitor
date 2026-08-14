@@ -40,6 +40,8 @@ class AutomationExampleTests(unittest.TestCase):
         examples = (ROOT / "examples" / "README.md").read_text()
         self.assertIn("examples/n8n-grants-gov-monitor.json", readme)
         self.assertIn("examples/README.md", readme)
+        self.assertIn("daily-small-business-federal-grant-alerts", readme)
+        self.assertIn("daily-nonprofit-federal-grant-alerts", readme)
         self.assertIn("n8n-grants-gov-monitor.json", examples)
         self.assertIn("ai-coding-radar~grants-gov-opportunity-monitor", examples)
         self.assertIn("monitorId", examples)

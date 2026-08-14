@@ -8,6 +8,11 @@ proxy, or browser automation.
 - [Run the Actor on Apify](https://apify.com/ai-coding-radar/grants-gov-opportunity-monitor)
 - Official source: [Grants.gov API Guide](https://www.grants.gov/api/api-guide)
 
+Ready-made public examples:
+
+- [Daily small-business federal grant alerts](https://apify.com/ai-coding-radar/grants-gov-opportunity-monitor/examples/daily-small-business-federal-grant-alerts)
+- [Daily nonprofit federal grant alerts](https://apify.com/ai-coding-radar/grants-gov-opportunity-monitor/examples/daily-nonprofit-federal-grant-alerts)
+
 This is a factual search and change feed. It does not decide whether an
 organization is eligible, recommend an application, estimate the chance of an
 award, or promise funding.
