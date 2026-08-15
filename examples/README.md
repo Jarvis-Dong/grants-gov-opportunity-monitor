@@ -13,6 +13,10 @@ workflow runs at 08:00 every day in the `Asia/Shanghai` timezone, calls the
 Actor's synchronous dataset endpoint, and passes `new` and `changed` rows to
 the final node. It uses this valid input:
 
+The matching [n8n Creator Hub title and description](./n8n-template-submission.md)
+are prepared but not submitted; a Creator account must accept n8n's terms
+before uploading them.
+
 ```json
 {
   "keyword": "artificial intelligence",

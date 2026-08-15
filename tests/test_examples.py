@@ -29,6 +29,9 @@ class AutomationExampleTests(unittest.TestCase):
         self.assertEqual(body["monitorId"], "n8n-ai-grants")
         self.assertIn("changeType === 'new'", nodes["Format grant alerts"]["parameters"]["jsCode"])
         self.assertIn("sourceUrl", nodes["Format grant alerts"]["parameters"]["jsCode"])
+        self.assertTrue(
+            any(node["type"] == "n8n-nodes-base.stickyNote" for node in workflow["nodes"])
+        )
 
         public_export = workflow_path.read_text().lower()
         self.assertNotIn("bearer apify_api_", public_export)
@@ -48,6 +51,15 @@ class AutomationExampleTests(unittest.TestCase):
         self.assertIn("limit", examples)
         self.assertIn("0.15005", examples)
         self.assertRegex(examples, re.compile(r"Make", re.IGNORECASE))
+
+        submission = (ROOT / "examples" / "n8n-template-submission.md").read_text()
+        self.assertIn("Monitor Grants.gov opportunities daily with Apify", submission)
+        self.assertIn("Who is this for?", submission)
+        self.assertIn("How it works", submission)
+        self.assertIn("How to set up", submission)
+        self.assertIn("Requirements", submission)
+        self.assertIn("How to customize", submission)
+        self.assertIn("prepared locally and not submitted", submission)
 
 
 if __name__ == "__main__":
