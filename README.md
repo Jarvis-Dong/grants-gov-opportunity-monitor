@@ -38,6 +38,30 @@ small-business code. Keep one stable `monitorId` for one exact set of filters.
 Changing the query under the same ID fails before a source request so unrelated
 searches cannot share a baseline.
 
+## Sample output
+
+This fixture-backed example shows the exact dataset shape without claiming that
+the opportunity is still current:
+
+```json
+{
+  "opportunityId": "363293",
+  "opportunityNumber": "PAS-JAKARTA-FY26-08",
+  "title": "American Innovation Hub: AI & Digital Skills",
+  "agencyCode": "DOS-IDN",
+  "agency": "U.S. Mission to Indonesia",
+  "openDate": "2026-07-23",
+  "closeDate": "2026-08-30",
+  "opportunityStatus": "posted",
+  "documentType": "synopsis",
+  "cfdaNumbers": ["19.441"],
+  "sourceUrl": "https://www.grants.gov/search-results-detail/363293",
+  "observedAt": "2026-08-15T00:00:00Z",
+  "changeType": "new",
+  "changes": []
+}
+```
+
 ## Monitoring semantics
 
 1. The first run stores the current results and emits each one as `new`.
