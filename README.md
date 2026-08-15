@@ -94,6 +94,34 @@ The generated API client's empty `{}` input is also safe: it uses the same
 bounded `artificial intelligence`, `posted` plus `forecasted`, 25-result query
 shown in the Store schema. Set a unique `monitorId` for every real alert.
 
+## AI agent quickstart (official MCP)
+
+MCP clients can connect to Apify's hosted server with a one-time OAuth login:
+
+```json
+{
+  "mcpServers": {
+    "apify": {
+      "url": "https://mcp.apify.com?tools=actors"
+    }
+  }
+}
+```
+
+Ask the agent to fetch details for
+`ai-coding-radar/grants-gov-opportunity-monitor`, show the current price, and
+then run it with the bounded JSON input above. Read-only Actor search and detail
+lookup also work without an account at
+`https://mcp.apify.com?tools=search-actors,fetch-actor-details`; running an Actor
+requires Apify OAuth or an API token. Keep tokens out of prompts and committed
+configuration files.
+
+Agents without an Apify account can instead buy a prepaid token through
+[Apify AGI](https://agi.apify.com/) using x402 or MPP. Current official terms
+set a `$1` minimum, a 14-day token lifetime, and no refund for unused credit.
+This route is experimental; review the Store price and set a spending limit
+before enabling unattended runs.
+
 The Grants.gov `search2` response includes service metadata that the Actor does
 not persist or expose. It does not call the detail or attachment endpoints, so
 it avoids downloading long descriptions, contact records, or application
