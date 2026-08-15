@@ -7,6 +7,7 @@ proxy, or browser automation.
 
 - [Run the Actor on Apify](https://apify.com/ai-coding-radar/grants-gov-opportunity-monitor)
 - Official source: [Grants.gov API Guide](https://www.grants.gov/api/api-guide)
+- [Browse the complete automation API catalog](https://ai-coding-radar.github.io/#toolbox-title)
 
 Ready-made public examples:
 
