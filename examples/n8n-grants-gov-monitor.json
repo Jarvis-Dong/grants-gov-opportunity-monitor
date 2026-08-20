@@ -3,9 +3,9 @@
   "nodes": [
     {
       "parameters": {
-        "content": "# Grants.gov Opportunity Monitor\n\n1. Import this workflow and attach an n8n Header Auth credential to **Run Grants.gov Monitor**. Use header `Authorization` and value `Bearer YOUR_APIFY_API_TOKEN`; keep the token in n8n's credential store.\n2. The input below is a bounded, valid example: `artificial intelligence`, posted or forecasted opportunities, `limit: 10`, and stable `monitorId: n8n-ai-grants`. Keep that ID unchanged for this exact query.\n3. Test once to create the baseline. The first run can emit up to ten `new` rows; later runs emit only `new` or `changed` rows.\n4. Replace **Connect Slack, email, or database here** with the private destination you control.\n\nAt the current prices, the maximum result/start event charge for this template is `$0.15005` per successful run (`10 * $0.015 + $0.00005`), before tax or account-level charges. Empty output is a healthy no-change run. This export contains no token, cookie, webhook, or payment data. The template does not run the Actor until you manually execute or activate it with your own token.",
-        "height": 390,
-        "width": 520,
+        "content": "# Monitor Grants.gov opportunities daily with Apify\n\n## Who is this for?\n\nThis workflow is for small-business teams, nonprofits, grant consultants, and research staff who need a factual daily feed of new or changed U.S. federal grant opportunities.\n\n## How it works\n\nThe Schedule Trigger runs every morning. An authenticated HTTP Request calls the Grants.gov Opportunity Monitor Actor with a bounded query. The Actor stores a baseline for the stable `monitorId`; the Code node keeps `new` and `changed` rows and formats an alert with the official source URL. The final placeholder is where you connect Slack, email, Teams, Notion, or a database.\n\n## How to set up\n\nCreate an n8n Header Auth credential with header name `Authorization` and value `Bearer YOUR_APIFY_API_TOKEN`, then attach it to **Run Grants.gov Monitor**. Run once to create the baseline, replace the final placeholder with your private destination, and activate the workflow.\n\n## Requirements\n\n- An Apify account and API token stored in n8n's credential manager.\n- Sufficient Apify balance for the Store's current pay-per-event price.\n- A notification or storage destination that you control.\n\n## How to customize the workflow\n\nEdit the HTTP Request JSON to change the keyword, status, agency, eligibility, funding category, or ten-result limit. Use a new lowercase `monitorId` when the filters change and keep it stable afterward. An empty response is a healthy no-change result. Always verify eligibility and the current notice on Grants.gov before making an application decision.\n\nAt the current prices, the maximum result/start event charge for this bounded template is `$0.15005` per successful run (`10 * $0.015 + $0.00005`), before tax or account-level charges. This export contains no token, cookie, webhook, or payment data, and it does not run until you manually execute or activate it with your own token.",
+        "height": 600,
+        "width": 1240,
         "color": 5
       },
       "id": "d8dfc8ea-45c1-4fb7-bb09-59e3f13022e2",
@@ -14,7 +14,7 @@
       "typeVersion": 1,
       "position": [
         -700,
-        -320
+        -640
       ]
     },
     {

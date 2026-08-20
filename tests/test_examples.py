@@ -29,9 +29,13 @@ class AutomationExampleTests(unittest.TestCase):
         self.assertEqual(body["monitorId"], "n8n-ai-grants")
         self.assertIn("changeType === 'new'", nodes["Format grant alerts"]["parameters"]["jsCode"])
         self.assertIn("sourceUrl", nodes["Format grant alerts"]["parameters"]["jsCode"])
-        self.assertTrue(
-            any(node["type"] == "n8n-nodes-base.stickyNote" for node in workflow["nodes"])
-        )
+        sticky = nodes["Setup notes"]["parameters"]["content"]
+        self.assertIn("Who is this for?", sticky)
+        self.assertIn("How it works", sticky)
+        self.assertIn("How to set up", sticky)
+        self.assertIn("Requirements", sticky)
+        self.assertIn("How to customize the workflow", sticky)
+        self.assertIn("0.15005", sticky)
 
         public_export = workflow_path.read_text().lower()
         self.assertNotIn("bearer apify_api_", public_export)
